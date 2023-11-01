@@ -1,8 +1,8 @@
 # @rulia/types
 
-This package provides the type definition for developing Rulia plugins.
+This package provides the type definition of the interaction functions for Rulia plugins.
 
-If you don't use TypeScript, please ignore this pacakge.
+If you don't use TypeScript, please ignore it.
 
 ## Quick start
 
@@ -24,4 +24,4 @@ npm install @rulia/types --save-dev
 }
 ```
 
-3. Done.
+3. From now on the editor you are using should give you code hint when you call something under `window.Rulia`.
