@@ -118,6 +118,12 @@ interface Window {
        * It has to match the payload that you send to server.
        */
       contentType?: string
+
+      /**
+       * Timeout for the request.
+       * This parameter is available from 0.15.0.
+       */
+      timeout?: number
     }) => Promise<string>
 
     /**
@@ -132,6 +138,26 @@ interface Window {
      * User config fields are defined in the section "userConfig" in the package.json.
      */
     getUserConfig: () => Record<string, string>
+
+    /**
+     * This local storage API just acts exactly the same as the one in browser.
+     * Your data will be saved by Rulia. 
+     * Available from 0.15.0.
+     */
+    localStorage: {
+      getItem: (key: string) => string | undefined
+      setItem: (key: string, value: string) => void
+    },
+
+    /**
+     * This session storage API just acts exactly the same as the one in browser.
+     * Your data will be lost after user close the Rulia.
+     * Available from 0.15.0.
+     */
+    sessionStorage: {
+      getItem: (key: string) => string | undefined
+      setItem: (key: string, value: string) => void
+    }
   }
 }
 
