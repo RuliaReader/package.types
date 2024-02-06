@@ -1,8 +1,12 @@
 {
   "name": "@rulia/types",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "This package provides the type definition for developing Rulia plugins.",
-  "keywords": ["Rulia", "Plugin", "LancerComet"],
+  "keywords": [
+    "Rulia",
+    "Plugin",
+    "LancerComet"
+  ],
   "files": [
     "index.d.ts",
     "README.md"
