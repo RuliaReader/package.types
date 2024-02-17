@@ -203,3 +203,17 @@ interface IRuliaChapterImage {
   width: number
   height: number
 }
+
+/**
+ * This is the type of filter options in manga list page.
+ */
+interface IRuliaMangaListFilterOption {
+  label: string
+  name: string | number
+  options: Array<{ label: string, value: string }>
+}
+
+/**
+ * This is the data type that should be returned in function "setMangaListFilterOptions".
+ */
+type IRuliaMangaListFilterOptions = IRuliaMangaListFilterOption[]
