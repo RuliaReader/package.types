@@ -124,6 +124,12 @@ interface Window {
        * This parameter is available from 0.15.0.
        */
       timeout?: number
+
+      /**
+       * Custom headers.
+       * This option is available from 0.17.0.
+       */
+      headers?: Record<string, string>
     }) => Promise<string>
 
     /**
@@ -141,7 +147,7 @@ interface Window {
 
     /**
      * This local storage API just acts exactly the same as the one in browser.
-     * Your data will be saved by Rulia. 
+     * Your data will be saved by Rulia.
      * Available from 0.15.0.
      */
     localStorage: {
