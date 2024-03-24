@@ -6,6 +6,12 @@ interface Window {
    */
   Rulia: {
     /**
+     * Write a log message.
+     * This function is available from 0.18.0.
+     */
+    log: (level: string, message: string) => void
+
+    /**
      * End execution of current plugin context without returning any data.
      */
     end: () => void
