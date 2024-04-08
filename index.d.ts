@@ -48,11 +48,11 @@ interface Window {
      *   payload: payload.toString()  // 'region=japan&keyword=school'
      * })
      *
-     * // If your response is a JSON.
+     * // If the response is a JSON.
      * const response = JSON.parse(rawResponse)
      *
      * @example
-     * // 2. Make a post request with "application/json".
+     * // 2. Make a post request in the form of the "application/json".
      * // ===========================================
      * const payload = {
      *   name: 'John Smith',
@@ -69,7 +69,7 @@ interface Window {
      * const response = rawResponse
      *
      * @example
-     * // 3. Make a post request with "application/x-www-form-urlencoded".
+     * // 3. Make a post request in the form of the "application/x-www-form-urlencoded".
      * // ===========================================
      * const payload = new URLSearchParams()
      * payload.append('name', 'John Smith')
@@ -92,7 +92,7 @@ interface Window {
      *   contentType: 'application/must-be-written-in-this-way'  // The required content type by the server.
      * })
      *
-     * // For an example, the sever responses with a YAML string.
+     * // For an example, the sever responses a YAML string.
      * const myYAML = parseYAML(rawResponse)
      */
     httpRequest: (params: {
@@ -107,20 +107,21 @@ interface Window {
       method: string
 
       /**
-       * Request data.
-       * It only accepts string, you have to serialize it yourself.
+       * Requested data.
+       * It only accepts string, thus you have to serialize it into string by yourself.
        * Check the example above to see how to do this.
        */
       payload?: string
 
       /**
-       * Content type of the payload.
-       * It has to match the payload that you send to server.
+       * Content type of the request.
+       * It should be somthing that the server asks for.
        */
       contentType?: string
 
       /**
-       * Timeout for the request.
+       * Timeout for the request. Milliseconds.
+       * No default setting.
        * This parameter is available from 0.15.0.
        */
       timeout?: number
@@ -146,8 +147,8 @@ interface Window {
     getUserConfig: () => Record<string, string>
 
     /**
-     * This local storage API just acts exactly the same as the one in browser.
-     * Your data will be saved by Rulia.
+     * This local storage API just acts exactly as the same as the one in browsers.
+     * The data will be persisted in Rulia.
      * Available from 0.15.0.
      */
     localStorage: {
@@ -157,7 +158,7 @@ interface Window {
 
     /**
      * This session storage API just acts exactly the same as the one in browser.
-     * Your data will be lost after user close the Rulia.
+     * Your data will be lost after users close the Rulia.
      * Available from 0.15.0.
      */
     sessionStorage: {
