@@ -54,11 +54,31 @@ interface Window {
      *   payload: payload.toString()  // 'region=japan&keyword=school'
      * })
      *
-     * // If your response is a JSON.
+     * // If the response is JSON.
      * const response = JSON.parse(rawResponse)
+     * 
+     * @example
+     * // 1.5 Make a get request and get both headers and response.
+     * // ===========================================
+     * const payload = new URLSearchParams()
+     * payload.append('region', 'japan')
+     * payload.append('keyword', 'school')
+     * 
+     * const rawResponse = await window.Rulia.httpRequest({
+     *   url: 'https://example.com/v1/comic-list',
+     *   method: 'GET',
+     *   payload: payload.toString(),  // 'region=japan&keyword=school'
+     *   responseWithHeaders: true     // Be aware of this.
+     * })
+     * 
+     * const { data, headers } = JSON.parse(rawResponse)
+     * console.log(headers)  // { 'content-type': 'application/json', ... }
+     * 
+     * // If the response is JSON.
+     * const response = JSON.parse(data)
      *
      * @example
-     * // 2. Make a post request with "application/json".
+     * // 2. Make a post request in the form of the "application/json".
      * // ===========================================
      * const payload = {
      *   name: 'John Smith',
@@ -75,7 +95,7 @@ interface Window {
      * const response = rawResponse
      *
      * @example
-     * // 3. Make a post request with "application/x-www-form-urlencoded".
+     * // 3. Make a post request in the form of the "application/x-www-form-urlencoded".
      * // ===========================================
      * const payload = new URLSearchParams()
      * payload.append('name', 'John Smith')
@@ -98,7 +118,7 @@ interface Window {
      *   contentType: 'application/must-be-written-in-this-way'  // The required content type by the server.
      * })
      *
-     * // For an example, the sever responses with a YAML string.
+     * // For an example, the sever responses a YAML string.
      * const myYAML = parseYAML(rawResponse)
      */
     httpRequest: (params: {
@@ -113,20 +133,21 @@ interface Window {
       method: string
 
       /**
-       * Request data.
-       * It only accepts string, you have to serialize it yourself.
+       * Requested data.
+       * It only accepts string, thus you have to serialize it into string by yourself.
        * Check the example above to see how to do this.
        */
       payload?: string
 
       /**
-       * Content type of the payload.
-       * It has to match the payload that you send to server.
+       * Content type of the request.
+       * It should be somthing that the server asks for.
        */
       contentType?: string
 
       /**
-       * Timeout for the request.
+       * Timeout for the request. Milliseconds.
+       * No default setting.
        * This parameter is available from 0.15.0.
        */
       timeout?: number
@@ -136,6 +157,34 @@ interface Window {
        * This option is available from 0.17.0.
        */
       headers?: Record<string, string>
+
+      /**
+       * Whether to response with headers.
+       * If this option is set to true, the response will be a JSON string with two fields: "headers" and "data".
+       * If this option is set to false, the response will be the data itself.
+       * 
+       * This option is available from 0.18.0.
+       * 
+       * @example If the server responses a JSON { name: 'Doge' }.
+       * 
+       * const rawResponse = await window.Rulia.httpRequest({ ... })
+       * const data = JSON.parse(rawResponse)  // { name: 'Doge' }
+       * 
+       * const rawResponse = await window.Rulia.httpRequest({ ..., responseWithHeaders: true })
+       * const response = JSON.parse(rawResponse)  // { data: '{ "nane": "Doge" }', headers: { 'content-type': 'application/json', ... }
+       * const data = JSON.parse(response.data)  // { name: 'Doge' }
+       * const headers = response.headers  // { 'content-type': 'application/json', ... }
+       * 
+       * @example If the server responses a piece of XML: '<user><name>Doge</name></user>'
+       * 
+       * const data = await window.Rulia.httpRequest({ ... })  // '<user><name>Doge</name></user>'
+       * 
+       * const rawResponse = await window.Rulia.httpRequest({ ..., responseWithHeaders: true })
+       * const response = JSON.parse(rawResponse)  // { data: '<user><name>Doge</name></user>', headers: { 'content-type': 'application/xml', ... }
+       * const data = response.data  // '<user><name>Doge</name></user>'
+       * const headers = response.headers  // { 'content-type': 'application/xml', ... }
+       */
+      responseWithHeaders?: boolean
     }) => Promise<string>
 
     /**
@@ -152,8 +201,8 @@ interface Window {
     getUserConfig: () => Record<string, string>
 
     /**
-     * This local storage API just acts exactly the same as the one in browser.
-     * Your data will be saved by Rulia.
+     * This local storage API just acts exactly as the same as the one in browsers.
+     * The data will be persisted in Rulia.
      * Available from 0.15.0.
      */
     localStorage: {
@@ -163,13 +212,28 @@ interface Window {
 
     /**
      * This session storage API just acts exactly the same as the one in browser.
-     * Your data will be lost after user close the Rulia.
+     * Your data will be lost after users close the Rulia.
      * Available from 0.15.0.
      */
     sessionStorage: {
       getItem: (key: string) => string | undefined
       setItem: (key: string, value: string) => void
-    }
+    },
+
+    /**
+     * Get all cookies from Rulia.
+     * These cookies are available after the user logs in through WebView.
+     * This function is available from 0.18.0.
+     */
+    getCookies: () => Promise<{
+      Name: string
+      Path: string
+      Domain: string
+      Value: string
+      Expires: string
+      HttpOnly: boolean
+      Secure: boolean
+    }[]>
   }
 }
 
