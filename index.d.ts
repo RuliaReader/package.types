@@ -263,6 +263,15 @@ interface IGetMangaDataResult {
   }[]
 
   /**
+   * This option configures the behavior of the chapter list.
+   * Available from 0.22.0.
+   */
+  chapterListOptions?: {
+    hasPagination?: boolean
+    totalPage?: number
+  }
+
+  /**
    * There will be a continue button if you provide this information.
    */
   lastReadChapter?: {
