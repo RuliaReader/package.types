@@ -257,19 +257,25 @@ interface IGetMangaDataResult {
   title: string
   description: string
   coverUrl: string
+
+  /**
+   * Chapter list.
+   * If you need to make a pagination, assign "chapterListTotalPage" and
+   * leave "chapterList" an empty array.
+   */
   chapterList: {
     title: string
     url: string
   }[]
 
   /**
-   * This option configures the behavior of the chapter list.
+   * If this field is provided, the app will make a pagination
+   * for the chapter list.
+   * You only need to provide either "chapterListTotalPage" or "chapterList".
+   *
    * Available from 0.22.0.
    */
-  chapterListOptions?: {
-    hasPagination?: boolean
-    totalPage?: number
-  }
+  chapterListTotalPage?: number
 
   /**
    * There will be a continue button if you provide this information.
