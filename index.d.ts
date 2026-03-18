@@ -296,6 +296,19 @@ interface IRuliaChapterImage {
 }
 
 /**
+ * This is the data type that should be returned in function "getChapterArchive".
+ * When a plugin implements "getChapterArchive", Rulia will download the archive
+ * and open it using its built-in archive reader, instead of loading individual images.
+ */
+interface IRuliaChapterArchive {
+  /**
+   * The URL of the archive file to download.
+   * Supported formats: zip, rar, 7z, tar.
+   */
+  archiveUrl: string
+}
+
+/**
  * This is the type of filter options in manga list page.
  */
 interface IRuliaMangaListFilterOption {
